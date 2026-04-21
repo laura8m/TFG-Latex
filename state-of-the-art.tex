@@ -1,0 +1,1533 @@
+\chapter{Estado del arte}
+\label{ch:estado-del-arte}
+
+La conducción autónoma se define como la capacidad de un vehículo para
+navegar de manera segura y eficiente prescindiendo de la intervención
+directa de un operador humano~\cite{ita_deteccion}. Esta tecnología se
+ha consolidado como una de las más disruptivas para el futuro de la
+movilidad, centrando su potencial en la mejora de la seguridad vial, la
+optimización del transporte y la accesibilidad.
+
+No obstante, el concepto de automatización vehicular no es reciente.
+Sus orígenes se remontan a siglos atrás, con ideas y prototipos que han
+evolucionado hasta dar lugar a los avanzados sistemas actuales. Para
+situar el presente proyecto en su contexto tecnológico es necesario
+analizar la evolución histórica de la conducción autónoma, los
+distintos niveles de automatización definidos por organismos
+especializados y las principales tecnologías que hacen posible su
+funcionamiento.
+
+\section{Historia de los vehículos autónomos}
+\label{sec:historia-va}
+
+La historia de los vehículos autónomos comenzó a finales del siglo~XV
+cuando Leonardo Da Vinci diseñó un carro autopropulsado al que se le
+podía programar un recorrido predeterminado~\cite{motorpedia_historia}.
+Este diseño introdujo, de forma temprana, la idea de un vehículo capaz
+de desplazarse sin intervención humana directa.
+
+Posteriormente, la invención del giroscopio por Léon Foucault en 1852
+permitió mantener una dirección estable incluso cuando el entorno
+cambiaba. A finales del mismo siglo, Ludwig Obry aplicó este principio
+en sistemas de navegación autónoma para vehículos
+autopropulsados~\cite{prensa_conduccion}.
+
+La automatización vehicular moderna se empezó a conceptualizar en la
+Exposición Universal de Nueva York de 1939. En el pabellón
+\textit{Futurama}, el diseñador industrial Norman Bel Geddes planteó
+que la inteligencia de la navegación debía residir en la
+infraestructura viaria, mediante el uso de raíles o circuitos
+magnéticos integrados, y no en el propio
+vehículo~\cite{geddes1940magic}. Bajo este modelo, el conductor
+mantendría el control manual en entornos urbanos y delegaría la
+conducción al sistema automático únicamente al incorporarse a
+autopistas específicamente equipadas para ello.
+
+Este paradigma cambió con los trabajos del ingeniero alemán Ernst
+Dickmanns, quien defendió que el vehículo debía ser capaz de \emph{ver}
+y procesar su entorno de forma local, en línea con el enfoque actual de
+la robótica móvil~\cite{quintessence_dickmanns}. Logró convertir una
+furgoneta Mercedes-Benz en un vehículo autónomo guiado por visión y un
+ordenador integrado.
+
+Además, en 1995, gracias a la reducción de tamaño de los ordenadores y
+al aumento de sus prestaciones, consiguió que un Mercedes-Benz se
+desplazara entre Múnich y Copenhague, casi 1.000~km, con un porcentaje
+de conducción autónoma del 95\,\%~\cite{xataka_tecnologia}. A partir de
+estos avances, se sentaron las bases de la conducción autónoma
+contemporánea.
+
+El punto de inflexión se produjo a principios de este siglo, cuando la
+Agencia de Proyectos de Investigación Avanzados del Departamento de
+Defensa de Estados Unidos (\textit{Defense Advanced Research Projects
+Agency}, DARPA), organizó una serie de competiciones denominadas
+\textit{Grand Challenges}~\cite{iptc_vehiculo}. En el primero de ellos
+(2004), ningún vehículo logró completar el recorrido de 240~km por el
+desierto de Mojave; el mejor participante apenas recorrió 11~km antes
+de quedar bloqueado~\cite{elmundo_carrera}. El problema principal fue
+la incapacidad de los sistemas para distinguir entre sombras, texturas
+de suelo y obstáculos reales, lo que impulsó el desarrollo de nuevas
+técnicas de percepción y navegación autónoma, especialmente basadas en
+sensores avanzados y en enfoques de inteligencia artificial.
+
+En la segunda edición (2005), el equipo de la Universidad de Stanford
+logró completar con éxito la competición gracias a un sistema de
+percepción más robusto basado en la fusión de sensores láser y
+cámaras~\cite{thrun2006stanley}. Su principal innovación consistió en
+el uso de telemetría láser para generar mapas tridimensionales del
+entorno en tiempo real, demostrando que la medición precisa de
+distancias ofrece una mayor fiabilidad que el análisis puramente visual
+en entornos no estructurados.
+
+El \textit{Urban Challenge} de 2007 trasladó la competición a un
+entorno urbano respetando todas las normas de tráfico y compartiendo la
+vía con otros vehículos, tanto autónomos como conducidos por personas.
+En esta edición, los vehículos \textit{Boss} (Carnegie Mellon
+University)~\cite{urmson2008boss} y \textit{Junior} (Stanford
+University)~\cite{petrovskaya2009model} lograron los primeros puestos
+del podio gracias al invento de David Hall: un LiDAR giratorio de 64
+haces, que desempeñó un papel clave y demostró el enorme potencial de
+este tipo de sensor. Este invento permitió generar nubes de puntos
+tridimensionales mucho más densas y fiables, facilitando una
+reconstrucción geométrica precisa del entorno en tiempo real.
+
+Este salto en la calidad de la percepción resultó determinante, ya que
+permitió pasar de sistemas que únicamente detectaban obstáculos de
+forma parcial a arquitecturas capaces de comprender la escena de manera
+estructurada, integrando detección, localización y planificación sobre
+representaciones 3D coherentes. En este sentido, los DARPA Challenges
+consolidaron la percepción como el elemento crítico en la evolución de
+la conducción autónoma moderna. Estos retos no solo impulsaron el
+desarrollo tecnológico, sino que establecieron una sinergia fundamental
+entre los fabricantes de automóviles y el ámbito académico.
+
+A partir de 2009, esta tecnología abandonó los laboratorios
+universitarios con el nacimiento del \textit{Google Self-Driving Car
+Project} (actualmente Waymo). Este hito inició una carrera comercial
+sin precedentes que impulsó a la industria a estandarizar los niveles
+de automatización.
+
+\section{Niveles de automatización SAE J3016}
+\label{sec:sae-j3016}
+
+La transición desde la conducción clásica hacia la conducción
+plenamente autónoma se está haciendo de forma gradual y con objeto de
+establecer una clasificación clara. La Sociedad de Ingenieros de
+Automoción (\textit{Society of Automotive Engineers}, SAE) estableció
+en 2014 el estándar J3016, donde se definen varios niveles de
+automatización, posteriormente adoptados por toda la industria,
+considerando aquí su versión más reciente (SAE International,
+2021)~\cite{sae2021j3016}.
+
+Los niveles se diferencian principalmente en función de qué funciones
+asume el sistema respecto al conductor humano:
+
+\begin{itemize}
+    \item \textbf{Control de movimiento:} incluye tanto el control
+    lateral (dirección) como el longitudinal (aceleración y frenado)
+    del vehículo.
+    \item \textbf{Detección y respuesta ante objetos y eventos}
+    (\textit{Object and Event Detection and Response}, OEDR):
+    constituye una subtarea crítica que integra la monitorización del
+    entorno mediante la detección, reconocimiento y clasificación de
+    objetos, así como la ejecución de la respuesta adecuada ante los
+    eventos identificados.
+    \item \textbf{Planificación de maniobras:} responsable de las
+    funciones tácticas, tales como la decisión de adelantar o la
+    ejecución de un cambio de carril.
+\end{itemize}
+
+En la Figura~\ref{fig:niveles-automatizacion} se muestran los
+diferentes niveles de automatización.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/niveles-automatizacion.png}
+    \caption{Niveles de automatización~\cite{valle2021ecosistema}.}
+    \label{fig:niveles-automatizacion}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Nivel 0:} el conductor asume el control absoluto del
+    vehículo.
+    \item \textbf{Nivel 1:} el sistema asiste en un único eje de
+    control (longitudinal o lateral). El conductor supervisa
+    permanentemente.
+    \item \textbf{Nivel 2:} el sistema controla simultáneamente
+    dirección y pedales, pero el conductor sigue siendo responsable del
+    OEDR y debe permanecer atento. El sistema autónomo debe
+    desactivarse cuando el control pase a realizarlo el conductor
+    manualmente.
+    \item \textbf{Nivel 3:} el sistema asume la conducción completa
+    dentro de condiciones específicas, pero el conductor debe estar
+    disponible para retomar el control cuando el sistema lo solicite.
+    \item \textbf{Nivel 4:} el sistema conduce de forma completamente
+    autónoma dentro de un ámbito operativo controlado, sin requerir
+    intervención humana en su dominio de operación.
+    \item \textbf{Nivel 5:} automatización plena en cualquier
+    condición. El vehículo puede prescindir totalmente de controles
+    manuales (sin volante ni pedales).
+\end{itemize}
+
+Desde el punto de vista de la arquitectura del sistema, esta
+descomposición funcional se materializa habitualmente siguiendo el
+modelo clásico de robótica móvil conocido como Percibir--Planificar--Actuar
+(\textit{Sense--Plan--Act}), según el cual el vehículo se organiza en
+tres módulos principales: el módulo de percepción, encargado del OEDR;
+el módulo de decisión y planificación de ruta; y el módulo de control,
+responsable de traducir las decisiones en comandos de dirección,
+aceleración y frenado sobre los actuadores del vehículo.
+
+El presente trabajo se centra específicamente en el módulo de
+percepción, que constituye la base del flujo \textit{Sense--Plan--Act}
+y el punto crítico del sistema, dado que cualquier error en esta etapa
+se propaga a los módulos posteriores de planificación y control. Los
+apartados siguientes describen los sensores que proporcionan la
+información del entorno y los algoritmos que procesan dicha información
+para detectar obstáculos y regiones transitables. Los módulos de
+planificación y control quedan fuera del alcance de esta memoria.
+
+\section{Módulo de percepción}
+\label{sec:modulo-percepcion}
+
+Este módulo es responsable de interpretar el entorno del vehículo. A
+partir de un conjunto de sensores, detecta y caracteriza los elementos
+estáticos y dinámicos de la escena, estimando no solo su posición y
+velocidad sino también su movimiento futuro, cuya predicción resulta
+especialmente compleja en el caso de agentes con comportamientos
+erráticos. De forma complementaria, debe determinar la pose y velocidad
+propias del vehículo respecto a ese entorno. A continuación, se
+describen los tres tipos de sensores más empleados en los sistemas de
+percepción actuales.
+
+\subsection{Cámaras}
+\label{sec:camaras}
+
+Las cámaras son los sensores responsables de la \textbf{percepción
+semántica} del entorno del vehículo autónomo~\cite{janai2020computer}.
+Sus imágenes son esenciales para tareas como clasificación de señales
+de tráfico, lectura de marcas viales e identificación de peatones. La
+Figura~\ref{fig:yolo} ilustra el papel de las cámaras como sensor
+responsable de la interpretación semántica de la escena.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/yolo-trafico.png}
+    \caption{Ejemplo de salida del detector de objetos YOLO sobre una
+    escena de tráfico urbano~\cite{ultralytics_collision}.}
+    \label{fig:yolo}
+\end{figure}
+
+Atendiendo a su configuración geométrica, se distinguen dos modalidades
+principales:
+
+\begin{itemize}
+    \item \textbf{Cámaras monoculares:} proporcionan una única
+    perspectiva del entorno. No permiten estimar la distancia a los
+    objetos de forma directa, aunque existen técnicas de inferencia de
+    profundidad mediante redes neuronales convolucionales
+    (\textit{monocular depth estimation})~\cite{ranftl2022monocular}
+    cuya precisión, no obstante, sigue siendo limitada en escenarios no
+    estructurados.
+    \item \textbf{Cámaras estéreo:} emplean dos cámaras sincronizadas
+    para calcular la profundidad triangulando a partir de la
+    disparidad, definida como la diferencia de posición de un mismo
+    punto entre las dos imágenes. Esta configuración permite obtener
+    mediciones métricas con buena precisión a distancias cortas y
+    medias; sin embargo, el error aumenta de forma cuadrática a medida
+    que crece la distancia, ya que la disparidad se reduce
+    progresivamente con el alcance.
+\end{itemize}
+
+Las cámaras son sensores relativamente económicos, pero requieren
+sistemas de procesamiento avanzados para interpretar correctamente la
+información visual. Su principal limitación es la dependencia de las
+condiciones ambientales: la iluminación insuficiente o excesiva, la
+niebla densa, la lluvia y la nieve degradan la calidad de las imágenes
+y comprometen la fiabilidad de la percepción~\cite{bijelic2020fog}. Por
+ello, es necesario complementarlos con otros sensores que permitan una
+localización espacial exacta de los obstáculos.
+
+\subsection{Radio Detection And Ranging (Radar)}
+\label{sec:radar}
+
+Funciona mediante la emisión de ondas electromagnéticas milimétricas,
+habitualmente en la banda de 77~GHz en aplicaciones automotrices, que
+se propagan por el espacio hasta impactar con un objeto y retornar al
+sensor~\cite{patole2017radar} (véase Figura~\ref{fig:radar}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/radar.png}
+    \caption{Representación del funcionamiento de los sensores de
+    Radar~\cite{martil_radar}.}
+    \label{fig:radar}
+\end{figure}
+
+A partir del tiempo de vuelo de la señal reflejada se calcula la
+distancia al obstáculo, mientras que el desplazamiento de frecuencia
+entre la señal emitida y la recibida (efecto Doppler) permite estimar
+de forma directa su velocidad radial. Esta capacidad de medir
+simultáneamente posición y velocidad sin necesidad de procesamiento
+adicional constituye una de las características distintivas del radar.
+
+Su principal ventaja operativa es la robustez frente a condiciones
+meteorológicas adversas, lo que permite mantener la detección incluso
+cuando la visibilidad óptica está fuertemente
+comprometida~\cite{bijelic2020fog}. Adicionalmente, destacan por su
+alcance operativo, que en configuraciones de largo alcance
+(\textit{Long Range Radar}, LRR) puede situarse entre los 250 y 300
+metros, valores superiores a los del LiDAR comercial actual.
+
+No obstante, el radar presenta limitaciones importantes derivadas de
+la longitud de onda empleada. La principal es su baja resolución
+angular, típicamente de 1--2\textdegree, lo que dificulta distinguir
+objetos cercanos entre sí y determinar con precisión la forma de un
+obstáculo, restringiendo su uso a la detección y seguimiento más que a
+la caracterización geométrica del entorno~\cite{bilik2019radar}.
+Adicionalmente, en escenarios urbanos con abundancia de superficies
+metálicas (vehículos, mobiliario urbano, fachadas), las ondas
+reflejadas pueden seguir trayectorias múltiples antes de retornar al
+sensor (\textit{multipath}), generando detecciones fantasma o ecos
+falsos cuya correcta interpretación requiere técnicas avanzadas de
+filtrado y asociación de datos.
+
+\subsection{LiDAR (Light Detection and Ranging)}
+\label{sec:lidar}
+
+Mientras que las cámaras son indispensables para la comprensión
+semántica del entorno y el radar resulta clave para la detección de
+objetos a larga distancia y la medición directa de la velocidad, el
+LiDAR se posiciona como el sensor fundamental para la reconstrucción
+geométrica precisa del entorno en tres
+dimensiones~\cite{royo2019lidar}. Esta capacidad de capturar la
+estructura 3D real de la escena, sin depender de las condiciones de
+iluminación ni de la apariencia visual de los objetos, lo convierte en
+el sensor de referencia para sistemas de percepción orientados a la
+navegación autónoma segura.
+
+\subsubsection{Principio de funcionamiento}
+\label{sec:lidar-principio}
+
+Es un sensor activo que mide distancias mediante la emisión de pulsos
+láser, típicamente en longitudes de onda de 905~nm o 1550~nm. El método
+estándar es el cálculo del Tiempo de Vuelo (\textit{Time of Flight},
+ToF) entre la emisión del pulso y la recepción del eco reflejado por el
+objeto~\cite{li2020lidar}. Conocida la velocidad de la luz
+$c \approx 3 \times 10^{8}$\,m/s, la distancia $R$ al objeto se obtiene
+como:
+\begin{equation}
+    R = \frac{c \cdot \Delta t}{2},
+\end{equation}
+donde $\Delta t$ es el intervalo entre la emisión del pulso y la
+recepción del eco, y el factor $\tfrac{1}{2}$ refleja que la señal
+recorre el camino de ida y vuelta.
+
+Los sistemas LiDAR modernos repiten este proceso millones de veces por
+segundo, generando una representación tridimensional densa del entorno
+conocida como \textbf{nube de puntos}: un conjunto de puntos con
+coordenadas espaciales $(X, Y, Z)$ expresadas en el sistema de
+referencia local del sensor~\cite{gomes2023survey}.
+
+Cada punto de la nube no se reduce a sus tres coordenadas espaciales,
+sino que incluye información complementaria relevante para el procesado
+posterior: un valor de \textbf{intensidad} que refleja la reflectividad
+del material impactado, el identificador del \textbf{anillo} emisor
+(\textit{ring}) que generó el haz (en sensores rotativos o en
+arquitecturas \textit{solid-state} que emulan esta estructura), el
+\textbf{timestamp} preciso de la adquisición, y, en sensores avanzados,
+métricas adicionales como reflectividad calibrada o imagen de
+infrarrojo ambiente.
+
+Los sistemas más avanzados emplean modulación de frecuencia continua
+(\textit{Frequency-Modulated Continuous Wave}, FMCW), que no solo mide
+la distancia sino que permite extraer la velocidad radial del objeto
+mediante el desplazamiento Doppler, de forma análoga al radar. Esta
+tecnología, sin embargo, aún se encuentra en fase de desarrollo
+industrial: su alto coste y la complejidad de fabricación óptica
+dificultan su adopción masiva en vehículos de serie.
+
+\subsubsection{Arquitecturas de hardware: rotativos vs.\ estado sólido}
+\label{sec:lidar-hw}
+
+Las principales arquitecturas LiDAR en uso actualmente, descritas en
+detalle por Li e Ibanez-Guzman~\cite{li2020lidar}, se dividen en dos
+grandes categorías: mecánicas rotativas y de estado sólido. La manera
+en que el sensor barre el entorno determina su funcionalidad,
+fiabilidad mecánica y coste.
+
+\begin{itemize}
+    \item \textbf{LiDAR mecánico rotativo:} emplea pares emisor-receptor
+    montados sobre un eje que gira a velocidades típicas de 5--20~Hz,
+    generando un barrido horizontal de 360\textdegree\
+    (Figura~\ref{fig:lidar-rotativo}). Esta arquitectura, utilizada en
+    sensores como el Velodyne HDL-64E o el Velodyne Alpha Prime,
+    proporciona una distribución uniforme de puntos en acimut (ángulo
+    horizontal medido respecto a la dirección de avance del vehículo),
+    lo que la hace ideal para tareas de percepción omnidireccional. Sin
+    embargo, sus partes móviles plantean desafíos de fiabilidad
+    mecánica a largo plazo y son vulnerables a vibraciones. Además, su
+    coste históricamente elevado y su tamaño voluminoso dificultan su
+    integración estética en vehículos de producción.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/lidar-rotativo.png}
+    \caption{Principio del LiDAR mecánico rotativo~\cite{li2020lidar}.}
+    \label{fig:lidar-rotativo}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{LiDAR de estado sólido} (\textit{solid-state}):
+    elimina las partes móviles sustituyéndolas por tecnologías como
+    \textit{Micro-Electro-Mechanical Systems} (MEMS) con micro-espejos
+    oscilantes, \textit{Optical Phased Arrays} (OPA) que dirigen el haz
+    electrónicamente sin elementos mecánicos, o \textit{Flash LiDAR},
+    que ilumina toda la escena simultáneamente y captura el retorno con
+    una matriz de detectores. Sus principales ventajas son un coste
+    sustancialmente menor, mayor robustez mecánica, menor tamaño y
+    posibilidad de integración embebida en parachoques y faros. Su
+    limitación principal es un campo de visión más reducido que los
+    rotativos (con valores típicos entre 30\textdegree\ y
+    120\textdegree\ horizontales según la tecnología y el fabricante),
+    lo que obliga a combinar varios sensores para conseguir cobertura
+    completa.
+\end{itemize}
+
+Las arquitecturas híbridas combinan componentes de estado sólido con un
+barrido mecánico simplificado. Un ejemplo destacado es la familia
+Ouster OS, que rota a 10--20~Hz para lograr cobertura horizontal de
+360\textdegree, posicionándose entre los LiDAR mecánicos rotativos y
+los de estado sólido puros.
+
+\subsubsection{Canales (número de haces)}
+\label{sec:lidar-canales}
+
+El número de \textbf{canales} o \textit{beams} determina la
+\textbf{resolución vertical} del sensor y, en consecuencia, la densidad
+de la nube de puntos generada. Esta tecnología es fundamental para la
+navegación de vehículos autónomos, donde a mayor número de canales,
+mayor es la riqueza de detalles y la seguridad. Los LiDAR de
+\textbf{16~canales} (p.~ej.\ Velodyne VLP-16) ofrecen baja resolución y
+son típicos de plataformas de bajo coste o aplicaciones poco exigentes.
+Los de \textbf{64~canales} (Velodyne HDL-64E) fueron durante años el
+estándar de referencia para investigación en conducción
+autónoma~\cite{geiger2012kitti}. Actualmente, sensores de
+\textbf{128~canales} (Ouster OS1-128 o Velodyne Alpha Prime)
+proporcionan nubes mucho más densas que permiten detectar objetos
+pequeños y bordillos a mayor distancia, con la contrapartida de un
+coste superior, mayor ancho de banda de datos y, habitualmente, mayor
+consumo energético.
+
+\subsubsection{Características técnicas y limitaciones}
+\label{sec:lidar-limitaciones}
+
+Los parámetros principales que definen el rendimiento de un sensor
+LiDAR son:
+
+\begin{itemize}
+    \item \textbf{Alcance máximo:} depende de la potencia del láser y
+    de la reflectividad del objeto. En sensores de gama alta, el
+    alcance puede llegar a 200--300~m sobre superficies altamente
+    reflectantes, pero se reduce a 50--80~m sobre materiales oscuros o
+    poco reflectantes (asfalto mojado, ropa negra).
+    \item \textbf{Precisión métrica:} del orden de 2--3~cm a distancias
+    medias, una de las virtudes principales del sensor frente a las
+    cámaras y al radar.
+    \item \textbf{Resolución angular horizontal y vertical:} los LiDAR
+    de gama alta alcanzan resoluciones del orden de 0.1\textdegree,
+    frente a los 1--2\textdegree\ típicos del radar.
+    \item \textbf{Frecuencia de adquisición:} típicamente 10--20~Hz,
+    compatible con los requisitos de tiempo real de la mayoría de
+    sistemas de percepción.
+    \item \textbf{Robustez ante condiciones adversas:} el rendimiento
+    del LiDAR se degrada con lluvia intensa, niebla densa, nieve y
+    polvo en suspensión, debido a la dispersión y absorción de la
+    radiación láser por las partículas en
+    suspensión~\cite{bijelic2020fog}. Esta limitación motiva la fusión
+    sensorial con cámaras y radar en aplicaciones comerciales, aunque
+    la robustez geométrica del LiDAR frente a variaciones de
+    iluminación lo mantiene como sensor principal para la
+    reconstrucción 3D en la mayoría de los \textit{pipelines} de
+    investigación.
+\end{itemize}
+
+\section{Algoritmos de percepción}
+\label{sec:algoritmos-percepcion}
+
+Una vez adquirida la información del entorno a través de los sensores
+descritos en la sección anterior, el vehículo autónomo debe procesarla
+para construir una representación útil de la escena. Es en esta etapa
+donde entran en juego los algoritmos de percepción, responsables de
+transformar los datos crudos, y en particular las nubes de puntos
+LiDAR, en entidades interpretables por los módulos posteriores de
+planificación y control.
+
+El módulo de percepción engloba varias subtareas, organizadas
+tradicionalmente en cuatro bloques funcionales
+(Figura~\ref{fig:pipeline-percepcion}): la detección de objetos
+(\textit{Object Detection}), que comprende la segmentación del suelo y
+la identificación de los elementos no-suelo presentes en la escena; el
+reconocimiento (\textit{Object Recognition}), que asigna una categoría
+semántica a cada objeto detectado; el seguimiento multi-objeto
+(\textit{Multi-Object Tracking}), que mantiene la identidad y la
+trayectoria de los agentes a lo largo del tiempo; y la predicción de
+intención (\textit{Intention Prediction}), que estima su movimiento
+futuro a corto y medio plazo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/pipeline-percepcion.png}
+    \caption{Pipeline de un sistema de percepción LiDAR
+    clásico~\cite{li2020lidar}.}
+    \label{fig:pipeline-percepcion}
+\end{figure}
+
+El presente trabajo se centra en la primera de estas etapas, la
+detección de objetos, descomponiéndola en tres subtareas consecutivas:
+la segmentación del suelo, la identificación de obstáculos mediante
+agrupamiento de puntos no-suelo y la extracción de cajas delimitadoras
+orientadas (\textit{Oriented Bounding Boxes}, OBBs) que representan de
+forma compacta a cada obstáculo. Estas tres etapas constituyen el
+núcleo mínimo necesario para alimentar al módulo de planificación con
+la información geométrica imprescindible para una navegación segura. A
+lo largo de esta sección se revisan los principales algoritmos
+empleados en cada una de ellas, tanto desde el enfoque geométrico
+clásico como desde el paradigma del aprendizaje profundo.
+
+\subsection{Paradigmas: enfoque geométrico vs.\ aprendizaje profundo}
+\label{sec:paradigmas}
+
+Los algoritmos de percepción sobre nubes de puntos LiDAR pueden
+agruparse en dos grandes paradigmas con filosofías radicalmente
+distintas. Cada uno responde al problema de extraer información útil de
+la nube de puntos con herramientas diferentes, y presenta ventajas y
+limitaciones específicas que condicionan su despliegue en aplicaciones
+de conducción autónoma.
+
+\subsubsection{Enfoque geométrico clásico}
+\label{sec:enfoque-geometrico}
+
+Explota las propiedades intrínsecas de la nube de puntos (coordenadas
+espaciales, normales locales, densidad, estructura de anillos) mediante
+reglas y modelos matemáticos deterministas que no requieren
+entrenamiento previo. Su principal virtud es la \textbf{interpretabilidad}:
+cada decisión del sistema puede rastrearse hasta un criterio geométrico
+explícito (un umbral de altura, una condición de verticalidad, una
+distancia a un plano), lo que facilita la depuración, la justificación
+formal del comportamiento y la adaptación rápida a nuevos escenarios.
+Al operar directamente sobre la geometría del entorno, el enfoque
+geométrico presenta una capacidad de transferencia significativamente
+superior a la del aprendizaje profundo. Su aplicación a un nuevo sensor
+o entorno requiere únicamente la recalibración de un pequeño conjunto
+de parámetros operativos (altura del sensor, número de anillos, rango
+efectivo, umbrales de altura); en contraste con el reentrenamiento
+completo, la GPU y los grandes volúmenes de datos etiquetados que
+exigen los métodos basados en redes neuronales.
+
+Como contrapartida, este enfoque depende de parámetros ajustados
+manualmente, puede resultar frágil ante terrenos altamente irregulares
+y, al carecer de contexto semántico, tiene dificultades para distinguir
+objetos con geometría similar (por ejemplo, un peatón de un poste).
+
+\subsubsection{Enfoque basado en aprendizaje profundo}
+\label{sec:enfoque-dl}
+
+El paradigma alternativo delega la extracción de información a redes
+neuronales entrenadas sobre grandes conjuntos de datos etiquetados. En
+la literatura se distinguen tres grandes familias según la
+representación empleada de la nube de puntos: los métodos de
+\textbf{proyección 2D}, que transforman la nube en imágenes de rango
+sobre las que se aplican redes convolucionales bidimensionales
+(p.\ ej.\ RangeNet++); los métodos de \textbf{discretización
+volumétrica}, que dividen el espacio en vóxeles (cartesianos o
+cilíndricos) y aplican convoluciones 3D (VoxelNet, Cylinder3D); y los
+métodos de \textbf{procesamiento directo de puntos}, que emplean
+operadores invariantes a permutaciones sobre los puntos originales
+(PointNet, PointNet++). Estos métodos alcanzan precisiones muy elevadas
+en el dominio de entrenamiento, incorporan de forma implícita
+información semántica rica y son capaces de resolver simultáneamente
+múltiples subtareas (segmentación, detección y clasificación) con una
+sola arquitectura.
+
+No obstante, presentan limitaciones importantes: requieren GPU para
+inferencia en tiempo real, demandan grandes volúmenes de datos
+etiquetados cuya generación es costosa, y sufren una degradación
+notable cuando se aplican a sensores o entornos distintos de los
+empleados durante el entrenamiento, fenómeno conocido en la literatura
+como \textit{domain gap} y especialmente acusado en escenarios no
+urbanos o con sensores de diferente resolución. Esta dicotomía entre
+precisión en dominio conocido y robustez frente a cambios de dominio es
+un compromiso ampliamente reconocido en la
+literatura~\cite{gomes2023survey}.
+
+\subsubsection{Síntesis comparativa}
+\label{sec:sintesis}
+
+La Tabla~\ref{tab:comparativa-paradigmas} resume de manera estructurada
+las principales diferencias y fortalezas de ambos paradigmas.
+
+\begin{table}[H]
+    \centering
+    \caption{Síntesis comparativa de ambos enfoques.}
+    \label{tab:comparativa-paradigmas}
+    \begin{tabularx}{\textwidth}{@{}lXX@{}}
+        \toprule
+        \textbf{Característica} & \textbf{Enfoque geométrico} & \textbf{Aprendizaje profundo} \\
+        \midrule
+        Necesidad de entrenamiento & No (basado en reglas) & Sí (\textit{datasets} etiquetados) \\
+        Transferencia a nuevo sensor & Recalibración de parámetros (minutos) & Reentrenamiento completo (horas/días + datos) \\
+        Interpretabilidad & Total (criterio físico) & Baja (caja negra) \\
+        Requisitos \textit{hardware} & Bajos (CPU eficiente) & Altos (GPU dedicada) \\
+        Riqueza semántica & Limitada & Alta \\
+        Robustez en dominios no vistos & Elevada (tras recalibración) & Limitada \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{Segmentación del suelo}
+\label{sec:segmentacion-suelo}
+
+La segmentación del suelo consiste en separar los puntos de la nube
+LiDAR que pertenecen a la superficie transitable de aquellos que
+corresponden a obstáculos u otros elementos del entorno. Esta tarea se
+ha estudiado exhaustivamente en la literatura por su papel crítico en
+el \textit{pipeline} de conducción autónoma: tal como describen Gomes
+et al.\ en su \textit{survey}~\cite{gomes2023survey}, el flujo de
+procesamiento estándar de una nube LiDAR comprende
+\enquote{una etapa de filtrado del suelo que aísla los puntos de suelo
+de los no-suelo, reduciendo el volumen de datos para las etapas
+posteriores de detección y clasificación de objetos, además de mejorar
+la navegación y cumplir con los requisitos de tiempo real}. Sin una
+segmentación fiable del suelo, cualquier algoritmo de agrupamiento
+posterior mezclaría puntos de la calzada con los de vehículos y
+peatones, invalidando la detección.
+
+La literatura clasifica los algoritmos de segmentación del suelo en
+cinco grandes familias, ilustradas en la
+Figura~\ref{fig:seg-suelo-familias}: métodos basados en
+\textbf{rejillas 2.5D}, que proyectan la nube sobre mapas de elevación
+o cuadrículas de ocupación; \textbf{modelado de superficies}
+(\textit{ground modelling}), que ajusta modelos matemáticos explícitos
+(planos, líneas o regresiones gaussianas) a los puntos del suelo;
+\textbf{análisis de puntos adyacentes y características locales}, que
+explota relaciones geométricas entre puntos vecinos mediante técnicas
+como \textit{channel-based}, \textit{range images}, \textit{clustering}
+o \textit{region-growing}; \textbf{inferencia de orden superior},
+basada en modelos probabilísticos como \textit{Markov Random Fields}
+(MRF) o \textit{Conditional Random Fields} (CRF); y métodos basados en
+\textbf{aprendizaje profundo}, que emplean redes convolucionales para
+clasificar cada punto como suelo o no-suelo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/seg-suelo-familias.png}
+    \caption{Algoritmos de segmentación del suelo.}
+    \label{fig:seg-suelo-familias}
+\end{figure}
+
+De estas cinco familias, el ajuste de planos (\textit{plane fitting})
+presenta un conjunto de propiedades particularmente relevantes para
+aplicaciones de conducción autónoma: madurez y amplia adopción en
+\textit{pipelines} de producción, compatibilidad con requisitos de
+tiempo real sobre CPU, y capacidad de transferencia entre sensores
+mediante recalibración mínima de parámetros. Por estas razones, es el
+enfoque adoptado en el presente trabajo. Las restantes familias, aunque
+también válidas, presentan limitaciones que las hacen menos adecuadas
+para el caso de uso considerado: las rejillas 2.5D pierden información
+en terrenos con rasantes variables, los métodos de inferencia de orden
+superior resultan computacionalmente costosos para \textit{pipelines}
+de tiempo real, y los basados en aprendizaje profundo requieren
+reentrenamiento al cambiar de sensor y \textit{hardware} específico
+para inferencia.
+
+En los apartados siguientes se revisan los dos métodos más
+representativos del ajuste de planos en percepción LiDAR:
+\textit{Random Sample Consensus} (RANSAC), algoritmo fundamental e
+históricamente de referencia, y Patchwork++, su evolución actual basada
+en ajustes locales sobre un modelo de zonas concéntricas.
+
+\subsubsection{Plane Fitting clásico: RANSAC}
+\label{sec:ransac}
+
+Propuesto originalmente por Fischler y Bolles~\cite{fischler1981ransac}
+en el contexto de la visión por computador para el ajuste de modelos en
+presencia de \textit{outliers}, es una técnica iterativa genérica de
+estimación robusta de parámetros de un modelo matemático. Su aplicación
+a la segmentación del suelo en nubes de puntos LiDAR consiste en
+ajustar, de forma iterativa, el plano tridimensional que mejor
+representa la superficie transitable.
+
+El procedimiento básico consiste en seleccionar aleatoriamente tres
+puntos de la nube (el mínimo necesario para definir un plano), ajustar
+el plano determinado por ellos y contar cuántos puntos del resto de la
+nube se encuentran a una distancia ortogonal inferior a un umbral
+prefijado, considerándolos \textit{inliers}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/ransac-plane.png}
+    \caption{Representación visual de una clasificación por distancia
+    ortogonal~\cite{gomes2023survey}.}
+    \label{fig:ransac-plane}
+\end{figure}
+
+Este proceso se repite un número suficiente de iteraciones para
+garantizar con alta probabilidad que al menos una selección de tres
+puntos pertenezca realmente al suelo; el plano con mayor número de
+\textit{inliers} se retiene como estimación final. La naturaleza del
+criterio de consenso (decidir por mayoría de \textit{inliers}) hace que
+RANSAC sea robusto frente a \textit{outliers}.
+
+No obstante, la aplicación de RANSAC a la segmentación del suelo en
+entornos reales presenta limitaciones importantes. Como señalan los
+autores del \textit{survey}, \enquote{el suelo no es siempre plano, por
+lo que la hipótesis de un único plano puede llevar a clasificaciones
+incorrectas. Además, datos ruidosos o complejos pueden degradar el
+rendimiento de RANSAC}~\cite{gomes2023survey}. Por este motivo, en
+entornos reales de conducción autónoma (con pendientes, baches,
+bordillos o cambios de rasante) la superficie transitable no se puede
+representar adecuadamente con un único plano global, lo que motiva el
+desarrollo de métodos de ajuste local por regiones.
+
+\subsubsection{Plane Fitting local: Patchwork++}
+\label{sec:patchworkpp}
+
+Para superar la limitación del plano único de RANSAC, diversos trabajos
+han propuesto dividir la nube de puntos en sectores y ajustar un plano
+local independiente en cada uno. El exponente más representativo de
+esta línea es \textbf{Patchwork}~\cite{lim2021patchwork}, propuesto por
+Lim et al.\ en 2021, que introduce una aproximación
+\textit{region-wise} al ajuste de planos mediante tres contribuciones
+principales:
+
+\begin{itemize}
+    \item Un \textbf{Concentric Zone Model} (CZM) que particiona el
+    espacio en cuatro zonas concéntricas con tamaños angulares y
+    radiales distintos por zona, adaptadas a la densidad típica de la
+    nube de puntos en cada rango de distancias
+    (Figura~\ref{fig:czm}). Esta partición no uniforme mitiga los
+    problemas clásicos de las representaciones polares convencionales,
+    donde los \textit{bins} resultan excesivamente grandes en zonas
+    lejanas, lo que impide representar adecuadamente objetos pequeños
+    como bordillos; mientras que los \textit{bins} próximos al sensor
+    pueden contener demasiados puntos concentrados en áreas pequeñas,
+    complicando el ajuste local del plano.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/czm.png}
+    \caption{(a) Descripción mediante una malla polar uniforme.
+    (b) Descripción de malla polar basada en
+    CZM~\cite{lim2021patchwork}.}
+    \label{fig:czm}
+\end{figure}
+
+\begin{itemize}
+    \item Un método de \textbf{Region-wise Ground Plane Fitting
+    (R-GPF)} que ajusta un plano local independiente en cada \textit{bin}
+    mediante Análisis de Componentes Principales (PCA) sobre los $K$
+    puntos de menor elevación, con velocidades al menos el doble que
+    las reportadas por RANSAC.
+    \item Una etapa de \textbf{Ground Likelihood Estimation (GLE)} que
+    filtra los planos estimados basándose en tres características:
+    \textit{uprightness} (verticalidad de la normal),
+    \textit{elevation} (altura del plano) y \textit{flatness} (varianza
+    de los puntos respecto al plano ajustado).
+\end{itemize}
+
+En las evaluaciones reportadas por los autores sobre el \textit{dataset}
+SemanticKITTI~\cite{behley2019semantickitti} (descrito en detalle en
+la Sección~\ref{sec:datasets}), Patchwork obtiene un F1 del 93.0\,\%
+con una precisión del 91.38\,\% y un \textit{recall} del 93.65\,\%,
+procesando \textit{frames} de aproximadamente 100.000 puntos a una
+velocidad de 43.97~Hz sobre CPU.
+
+A pesar de los buenos resultados obtenidos por Patchwork, sus propios
+autores identifican limitaciones residuales que motivan el desarrollo
+de una versión mejorada. Por un lado, el método presenta
+sub-segmentación parcial en \textit{bins} con terrenos irregulares o
+con estructuras verticales bajas cercanas al suelo (muros bajos, setos,
+vallas al ras), cuyo ajuste PCA resulta contaminado por los puntos
+verticales. Por otro, los umbrales fijos de la \textit{Ground
+Likelihood Estimation} requieren reajuste manual entre entornos
+(urbano, autopista, rural) y no aprovechan la coherencia temporal
+disponible en secuencias LiDAR reales. Adicionalmente, el algoritmo no
+contempla el ruido por reflexiones múltiples por debajo del suelo,
+habitual en superficies altamente reflectantes (nieve, asfalto mojado),
+lo que puede sesgar la estimación del plano. Para resolver estas
+limitaciones, proponen en 2022 \textbf{Patchwork++}~\cite{lee2022patchworkpp},
+una evolución del método original que introduce cuatro módulos
+adicionales (Figura~\ref{fig:patchworkpp}):
+
+\begin{itemize}
+    \item \textbf{Reflected Noise Removal (RNR)}, que elimina los
+    puntos espurios generados por reflexiones múltiples por debajo del
+    suelo, problema habitual en superficies altamente reflectantes como
+    la nieve o el asfalto húmedo.
+    \item \textbf{Region-wise Vertical Plane Fitting (R-VPF)}, que
+    detecta y filtra los planos verticales próximos al suelo antes de
+    ejecutar R-GPF, evitando que estas estructuras contaminen la
+    estimación del plano.
+    \item \textbf{Adaptive Ground Likelihood Estimation (A-GLE)}, que
+    sustituye los umbrales fijos de la GLE original por umbrales
+    adaptativos calculados estadísticamente a partir de los planos
+    correctamente clasificados en \textit{frames} anteriores,
+    permitiendo al algoritmo adaptarse automáticamente a distintos
+    entornos (urbano, autopista, rural) sin reajuste manual de
+    parámetros.
+    \item \textbf{Temporal Ground Revert (TGR)}, etapa final que
+    re-examina los \textit{bins} inicialmente clasificados como no-suelo
+    y los reclasifica como suelo si sus características son consistentes
+    con las del entorno medio del \textit{frame}.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/patchworkpp.png}
+    \caption{Diagramas de flujo de Patchwork y
+    Patchwork++~\cite{lee2022patchworkpp}.}
+    \label{fig:patchworkpp}
+\end{figure}
+
+La combinación de estas mejoras permite a Patchwork++ alcanzar un F1
+del 96.51\,\% sobre SemanticKITTI, frente al 95.58\,\% reportado por
+Patchwork, con una mejora especialmente notable en el \textit{recall}
+(+1.4 puntos). Por su combinación de precisión, velocidad sobre CPU y
+robustez frente a distintos entornos, Patchwork++ constituye
+actualmente el estado del arte en segmentación del suelo basada en
+métodos geométricos, y es el algoritmo adoptado como base del
+\textit{pipeline} propuesto en el presente trabajo.
+
+A pesar de las mejoras introducidas por Patchwork++, el método mantiene
+limitaciones intrínsecas al paradigma de ajuste de planos por regiones.
+El módulo TGR, aunque mejora notablemente el \textit{recall}, puede
+introducir falsos positivos al recuperar como suelo \textit{bins} con
+baja varianza vertical pero no pertenecientes al suelo real, con un
+\textit{trade-off} que los autores consideran aceptable. Además, en
+trabajos del mismo grupo~\cite{oh2022travel} se señala que
+\enquote{todos los métodos basados en segmentación del suelo, incluido
+Patchwork, se han centrado únicamente en la separación
+\textit{ground/non-ground} sin examinar la transitabilidad del terreno,
+es decir, la capacidad de identificar un área sobre la que un vehículo
+puede desplazarse con seguridad}, lo cual implica que elementos como
+bordillos o pequeños obstáculos en la calzada pueden quedar absorbidos
+dentro del modelo del plano al cumplir los criterios de
+\textit{uprightness}, \textit{elevation} y \textit{flatness}.
+
+La detección explícita de estos elementos requiere técnicas
+complementarias específicas, que se revisan en el siguiente apartado.
+
+\subsection{Detección de bordillos}
+\label{sec:deteccion-bordillos}
+
+La detección de bordillos constituye una tarea de percepción específica
+y especialmente relevante para la navegación autónoma, al situarse en
+la frontera entre el suelo transitable y los elementos no navegables
+del entorno. Los bordillos delimitan físicamente la calzada respecto a
+aceras, medianas y zonas peatonales, por lo que su correcta
+identificación resulta imprescindible para que el vehículo respete los
+límites de la vía y planifique trayectorias seguras, incluso en
+ausencia de marcas viales pintadas.
+
+Sin embargo, su detección entraña una dificultad notable debido a su
+geometría: con alturas típicas comprendidas entre 10 y 20~cm, los
+bordillos se sitúan en el límite de resolución métrica de los sensores
+LiDAR convencionales y, desde un punto de vista puramente geométrico,
+son indistinguibles de un suelo localmente irregular. Esta limitación
+ha impulsado el desarrollo de técnicas específicas en la literatura,
+cuya evolución histórica ha sido sintetizada por Romero et
+al.~\cite{romero2021curb} en su revisión del campo.
+
+La revisión realizada por dichos autores incluye contribuciones tanto
+sobre sistemas de percepción en tiempo real para vehículos autónomos
+(con sensores LiDAR rotativos a 10--20~Hz) como sobre sistemas de
+\textit{Mobile Laser Scanning} (MLS), configuraciones que combinan
+LiDAR con GNSS-RTK e IMU para la generación de cartografía 3D densa en
+post-procesado. Aunque las condiciones operativas de ambos entornos
+difieren (tiempo real vs.\ \textit{offline}, nube de puntos automotriz
+de densidad variable vs.\ nube MLS densa y sistemática), numerosos
+principios metodológicos desarrollados en el contexto MLS son
+conceptualmente transferibles al paradigma automotriz. Los siguientes
+apartados revisan las principales estrategias propuestas, organizadas
+según el principio metodológico subyacente.
+
+\subsubsection{Métodos basados en características geométricas radiales}
+\label{sec:curbs-radiales}
+
+Esta estrategia es la más extendida en sistemas de tiempo real por su
+bajo coste computacional. Se basa en explotar la estructura radial
+intrínseca de los sensores LiDAR rotativos, analizando los puntos de
+forma secuencial según el anillo (\textit{ring}) al que pertenecen.
+Dentro de este paradigma conviven dos variantes complementarias, que
+comparten la misma intuición: al barrer un bordillo, el sensor registra
+un \textbf{salto vertical} entre puntos contiguos (ya sea entre
+\textit{rings} o dentro del mismo \textit{ring}) que supera un umbral
+característico, permitiendo identificar la discontinuidad.
+
+Los métodos \textbf{inter-anillo} comparan métricas de altura entre
+puntos de anillos adyacentes $(P_i, P_{i+1})$ para un mismo acimut,
+detectando la discontinuidad cuando el anillo interior cae sobre la
+calzada y el exterior sobre la acera. Los métodos \textbf{intra-anillo},
+en cambio, analizan las transiciones entre puntos consecutivos dentro
+de un mismo anillo por separado, interpretando el bordillo como una
+ruptura local en la secuencia ordenada de puntos del barrido láser.
+
+El trabajo impulsor de esta línea es el de Tan et
+al.~\cite{tan2014curb}, que formalizan la detección de bordillos sobre
+un Velodyne HDL-64E combinando el análisis inter-anillo con información
+de cámara a color. Sobre la nube LiDAR, el método procesa pares de
+puntos de anillos consecutivos $(P_i, P_{i+1})$ correspondientes a una
+misma dirección angular y calcula el salto de altura entre ellos:
+\begin{equation}
+    \Delta z = \left| z_{i+1} - z_i \right|.
+\end{equation}
+Cuando el sensor barre un bordillo, el anillo interior $i$ cae sobre la
+calzada ($z \approx 0$) mientras el exterior $i+1$ cae sobre la acera
+($z \approx +15$\,cm), de modo que $\Delta z$ supera un umbral
+$H_{\min}$ característico y el punto se marca como candidato a bordillo.
+Posteriormente, se valida con una máscara semántica extraída de la
+imagen, lo que reduce falsos positivos en zonas con vegetación o
+sombras.
+
+La fusión LiDAR--cámara aporta robustez frente a geometrías ambiguas,
+pero introduce también sus principales limitaciones: exige una
+calibración espacio-temporal precisa entre ambos sensores, se degrada
+con niebla o baja iluminación, y restringe el alcance efectivo de la
+detección a aproximadamente 30~m, por debajo del rango útil real del
+LiDAR aislado.
+
+Chen et al.~\cite{chen2015velodyne} extienden el alcance de la
+detección hasta 50~m trabajando exclusivamente con el Velodyne HDL-64E,
+renunciando a la información de cámara y adoptando un análisis
+intra-anillo puro: procesan cada anillo $P_m$ como una secuencia de
+puntos consecutivos. Su \textit{pipeline} combina tres fases:
+(i)~extracción de \textit{feature points} por anillo mediante tres
+descriptores locales: la \textit{smoothness}, que mide la variación del
+punto respecto a sus vecinos del mismo anillo; la \textit{smooth arc
+length}, que cuantifica la longitud de los arcos suaves a izquierda y
+derecha sin cambios bruscos de geometría; y la \textit{height difference},
+definida como
+\begin{equation}
+    \Delta z = Z_{\max} - Z_{\min}, \quad Z_{\max}, Z_{\min} \in S \subset P_m,
+\end{equation}
+donde $S$ es el conjunto de puntos consecutivos del mismo anillo
+alrededor de $p_{m,i}$;
+(ii)~selección de semillas iniciales mediante criterio de distancia y
+Transformada de Hough sobre una rejilla polar;
+(iii)~modelado iterativo del bordillo mediante \textit{Gaussian Process
+Regression} (GPR), que permite representar tanto tramos rectos como
+curvas de forma continua. La GPR iterativa maneja bordillos curvos con
+precisión, algo que los métodos basados en Hough no capturan; las tres
+características locales combinadas son más robustas que un único
+umbral de altura, y la regresión GPR permite recuperar tramos
+parcialmente ocluidos gracias a su capacidad predictiva.
+
+Como contrapartida, el método alcanza una latencia de
+$\sim$69~ms por \textit{frame} sobre CPU i5 ($\sim$14~Hz), claramente
+superior a la de los métodos inter-anillo más simples; la calibración
+de los cinco hiperparámetros de la GPR ($l$, $\sigma_f^2$,
+$\sigma_n^2$, $T_{\text{model}}$, $T_{\text{data}}$) requiere un
+proceso previo de aprendizaje sobre curvas etiquetadas manualmente; y,
+además, el \textit{pipeline} presupone que el vehículo circula siempre
+con bordillos a ambos lados, simplificación que deja de cumplirse en
+autopistas o zonas rurales.
+
+Zhang et al.~\cite{yang2013mls} proponen el \textit{pipeline} más
+completo de esta familia, orientado específicamente a conducción
+autónoma, validado sobre un Velodyne HDL-32E y estructurado en dos
+fases diferenciadas. La primera fase consiste en una segmentación
+previa de la calzada mediante un \textit{sliding-beam model} capaz de
+reconocer el trazado incluso en intersecciones complejas (en forma de
+T, + e Y), donde los bordillos dejan de ser continuos. La segunda fase
+aplica una detección de bordillos por segmento basada en cuatro
+criterios geométricos intra-anillo calculados sobre cada \textit{ring}
+$l$ del sensor: continuidad horizontal $\delta_{xy,l}$, continuidad
+vertical $\delta_{z,l}$, ángulo entre vectores consecutivos
+$\theta_{i,l}$ y altura mínima del salto $H_c$. La continuidad
+horizontal se deriva físicamente de la geometría del sensor como
+\begin{equation}
+    \delta_{xy,l} = H_s \cdot \cot \theta_{f,l} \cdot \frac{\pi \, \theta_a}{180},
+\end{equation}
+donde $H_s$ es la altura de montaje del LiDAR, $\theta_{f,l}$ el ángulo
+vertical del anillo $l$ y $\theta_a$ la resolución angular horizontal;
+esta magnitud representa la distancia horizontal esperada entre dos
+puntos consecutivos del mismo anillo cuando ambos están sobre la
+calzada. La continuidad vertical se obtiene de manera análoga como
+\begin{equation}
+    \delta_{z,l} = \delta_{xy,l} \cdot \sin \theta_{f,l},
+\end{equation}
+que representa el desplazamiento vertical esperado entre los mismos
+puntos sobre un suelo plano. Si la diferencia real de altura
+$\left| z_i - z_{i-1} \right|$ entre dos puntos consecutivos del anillo
+$l$ supera $\delta_{z,l}$, se identifica una discontinuidad intra-anillo
+compatible con un bordillo.
+
+El hecho de que todos los umbrales se deriven explícitamente de
+parámetros físicos del sensor, en lugar de ajustarse empíricamente,
+permite una transferibilidad sensor-a-sensor significativamente mayor
+que en las aproximaciones anteriores. Entre sus limitaciones se
+encuentran la necesidad de información adicional DGPS + INS para
+compensar el \textit{roll} y \textit{pitch} del vehículo ---añadiendo
+dependencia de sensores externos al LiDAR---, la asunción inicial de
+calzada plana en el filtrado \textit{on-road} (que puede fallar en
+terrenos con pendiente acusada o rasantes irregulares) y la presencia
+de tres hiperparámetros del \textit{sliding-beam model} ($D_b$, $d_b$,
+$\theta_r$) cuya calibración requiere una búsqueda empírica extensiva
+---hasta 60 experimentos por escenario en el \textit{paper} original---
+para encontrar el ajuste óptimo.
+
+En resumen, los tres métodos alcanzan latencias compatibles con
+requisitos de tiempo real sobre CPU sin necesidad de GPU, no requieren
+entrenamiento supervisado ni \textit{datasets} etiquetados masivos, y
+producen decisiones directamente trazables a umbrales geométricos
+explícitos (altura, ángulo, continuidad), lo que los convierte en
+soluciones interpretables y fácilmente depurables. Como contrapartida,
+dependen de la indexabilidad de los puntos por anillo: cualquier cambio
+en el número de canales del sensor (16, 32, 64 o 128) requiere
+recalibrar los umbrales, y la aplicación a LiDAR de estado sólido puros
+(\textit{Flash}, OPA) exige reconstruir la estructura de líneas
+equivalente a partir del patrón de escaneo específico del sensor, tarea
+que no siempre resulta trivial. Además, son frágiles frente a la
+variación de densidad con la distancia: los anillos se separan
+progresivamente en el espacio a medida que aumenta el rango, con lo que
+el ruido relativo en los umbrales de continuidad crece y el rendimiento
+se degrada en las zonas lejanas al sensor. Por último, presuponen una
+continuidad geométrica relativamente bien definida del bordillo:
+funcionan adecuadamente en escenarios urbanos estructurados con
+bordillos largos y rectos o suavemente curvados, pero su rendimiento
+cae en entornos \textit{off-road}, en tramos con bordillos muy bajos
+(inferiores a 10~cm, próximos al límite de resolución métrica del
+sensor) o cuando el salto vertical queda diluido por la presencia de
+vegetación baja, arena o nieve en el borde de la calzada.
+
+Cabe mencionar a Yang et al.~\cite{yang2013mls}, quienes extienden el
+paradigma de análisis por líneas a datos MLS más densos (Optech Lynx
+Mobile Mapper), particionando la nube en secciones transversales de la
+calzada mediante discontinuidades del tiempo GPS de los pulsos láser.
+Sobre cada sección aplican un operador de ventana móvil análogo al
+análisis intra-anillo, pero introducen dos aportaciones distintivas
+respecto a los métodos revisados. La primera es el uso del cambio de
+\textbf{densidad de puntos} como \textit{feature} discriminante
+adicional: la cara vertical del bordillo recibe más pulsos por unidad
+angular que la superficie plana adyacente, lo que produce una
+concentración anómala de puntos detectable aunque el salto de altura se
+aproxime al umbral de ruido. La segunda es el uso del cambio acumulado
+de pendiente $\Delta \theta$ para distinguir tres tipos geométricos de
+bordillo (vertical, inclinado y redondeado), frente al criterio binario
+bordillo-o-no-bordillo de los demás métodos. Finalmente, una etapa de
+\textit{tracking} determinista y refinamiento consolida los puntos en
+entidades 3D continuas. Aunque el método fue diseñado para datos MLS de
+alta densidad y post-procesamiento \textit{offline}, sus tres
+aportaciones ---densidad como \textit{feature}, clasificación por tipos
+de bordillo y \textit{tracking} multi-\textit{frame}--- son
+conceptualmente transferibles al LiDAR automotriz en tiempo real,
+siempre que se sustituya la partición por tiempo GPS por una
+indexación por \textit{ring} del sensor.
+
+\subsubsection{Análisis estadístico de la superficie (normales y PCA)}
+\label{sec:curbs-pca}
+
+A diferencia de la estrategia anterior, esta familia es agnóstica
+respecto a la arquitectura del sensor: trata la nube como una colección
+desestructurada de puntos en el espacio $(X, Y, Z)$ y analiza la
+topología local de la superficie.
+
+Mediante PCA aplicado sobre vecindarios locales (bolas esféricas o
+$k$-\textit{nearest neighbors}) de cada punto se extraen dos magnitudes
+clave: la orientación del vector normal $\vec{n}$ al plano de ajuste
+local y la curvatura local
+\begin{equation}
+    c = \frac{\lambda_3}{\lambda_1 + \lambda_2 + \lambda_3},
+\end{equation}
+que cuantifica el grado de planitud del entorno. En una calzada plana,
+las normales apuntan aproximadamente en dirección vertical; sobre la
+cara lateral de un bordillo, la normal gira bruscamente hacia la
+horizontalidad y la curvatura se dispara, revelando la discontinuidad
+sin necesidad de información sobre la estructura radial del sensor.
+
+Hervieu \& Soheilian abordan la detección y reconstrucción de bordillos
+sobre datos de \textit{Mobile Laser Scanning} (sistema Stereopolis del
+IGN) empleando un enfoque basado en la orientación de las normales
+locales. Para cada punto de la nube, calculan el vector normal mediante
+ajuste de plano por mínimos cuadrados sobre un vecindario esférico de
+radio $R$. La característica discriminante del método es la distancia
+angular a la normal del suelo:
+\begin{equation}
+    \theta = \arccos \left( V_p \cdot \vec{z} \right),
+\end{equation}
+donde $\vec{z}$ es la dirección vertical. En superficie plana de
+calzada $\theta \approx 0^{\circ}$, mientras que en la cara lateral de
+un bordillo $\theta$ crece hasta aproximadamente 65--88\textdegree. Para
+paliar la inestabilidad del PCA con pocos vecinos, el método adapta
+dinámicamente el radio $R_p$ a la densidad local de cada punto.
+Posteriormente, un modelo predicción-observación basado en filtro de
+Kalman propaga la posición estimada del bordillo a lo largo de la
+calzada mediante un ajuste polinómico de grado $D$, lo que permite
+reconstruir tramos ocluidos por obstáculos extrapolando el modelo hasta
+que se recupera una observación válida. Entre sus ventajas destaca ser
+uno de los pocos métodos que aborda explícitamente oclusiones. Sus
+principales limitaciones residen en la dependencia de un radio $R$
+inicial adecuado para el cálculo de normales (demasiado pequeño produce
+normales ruidosas; demasiado grande pierde detalle cerca del sensor),
+en el coste computacional del ajuste de planos punto a punto sobre
+nubes MLS densas (no compatible con tiempo real automotriz), y en la
+configuración empírica de múltiples parámetros del modelo Kalman
+($\delta$, $\epsilon$, $L_M$, \textit{gains}, etc.) que requieren
+ajuste por escenario.
+
+Sus ideas fundamentales son directamente aplicables al LiDAR automotriz
+en tiempo real: el cálculo de normales locales por PCA sobre
+vecindarios esféricos constituye una herramienta estándar,
+implementable eficientemente con estructuras KD-\textit{tree}; el uso
+del ángulo con respecto a la vertical como \textit{feature}
+discriminante es independiente del tipo de sensor; y el modelo Kalman
+de predicción-observación es compatible con los requisitos temporales
+de la percepción automotriz. Las principales adaptaciones necesarias
+son la reducción previa de la densidad mediante voxelización (para
+acotar el coste del PCA punto a punto) y el ajuste del radio $R$ a la
+densidad real del LiDAR automotriz, sustancialmente menor a la del MLS.
+Cabe destacar que el presente trabajo adapta precisamente este tipo de
+análisis PCA al contexto del LiDAR automotriz para validar los
+bordillos detectados en la etapa geométrica previa.
+
+Más recientemente, Zhao et al.\ combinan el análisis PCA con un
+criterio multiescala de dimensionalidad (\textit{Multi-scale
+Dimensionality Criterion}, MSDC), calculando razones de valores propios
+$p_i = \lambda_i / (\lambda_1 + \lambda_2 + \lambda_3)$ a distintas
+escalas de vecindario para clasificar previamente los puntos en
+categorías 1D (líneas, como ramas de árbol), 2D (superficies, como
+calzada) y 3D (volúmenes, como vegetación densa). Esta clasificación
+permite separar explícitamente la vegetación del suelo antes de aplicar
+la detección de bordillos, abordando uno de los principales obstáculos
+de los métodos anteriores en entornos urbanos con arbolado. Sobre los
+puntos clasificados como suelo, combinan tres características
+complementarias ---intensidad de reflectancia filtrada con el método de
+Otsu, gradiente de elevación sobre un modelo digital de superficie
+(DEM) y variación de pendiente--- y refinan los bordes detectados
+mediante ajuste por \textit{splines} cuadráticas de Bézier, reportando
+tasas de completitud y corrección superiores al 98\,\% sobre bordes
+izquierdo y derecho en entornos urbanos complejos con vegetación,
+oclusiones y curvas.
+
+Las principales ventajas del método son su robustez frente a vegetación
+gracias al MSDC, la combinación de información geométrica y fotométrica
+---que aporta discriminación adicional---, el manejo explícito de
+bordillos curvos mediante el ajuste final por Bézier y la
+disponibilidad \textit{open access} del trabajo. Como contrapartida, el
+método fue diseñado y validado sobre MLS de alta densidad (RIEGL
+VUX-1HA), no sobre LiDAR automotriz de baja densidad; el cálculo
+multi-escala de PCA multiplica el coste computacional por el número de
+escalas evaluadas, alejándose del tiempo real sobre CPU embebido;
+depende de la calibración de intensidad del sensor ---que varía entre
+modelos y degrada con lluvia o suciedad---; requiere semi-supervisión
+para ajustar la separabilidad entre clases en el MSDC; y el ajuste por
+Bézier asume bordillos suaves y sin discontinuidades bruscas, por lo
+que falla en intersecciones complejas.
+
+\subsubsection{Métodos basados en extracción estructural paramétrica}
+\label{sec:curbs-estructural}
+
+Una tercera familia de métodos no se centra en la identificación de
+puntos individuales de bordillo, sino en la detección de estructuras
+geométricas coherentes (líneas, curvas paramétricas, planos) que
+representen el borde de la vía de forma continua. El fundamento es que
+los bordillos raramente son puntos aislados: típicamente forman líneas
+o curvas suaves que delimitan la calzada, y por tanto la detección
+puede beneficiarse de imponer esta restricción estructural.
+
+Las herramientas matemáticas más empleadas son la \textbf{Transformada
+de Hough}, que identifica alineaciones de puntos en espacios
+paramétricos, y los algoritmos de \textbf{crecimiento de regiones}
+(\textit{region growing}), que agrupan puntos candidatos en función de
+criterios de continuidad. Fernández et al.\ (2013) aplicaron la
+Transformada de Hough para garantizar que las detecciones de bordillos
+formen líneas continuas, eliminando detecciones espurias que no
+presenten coherencia estructural con sus vecinas. Kumar et al.\ (2013)
+propusieron una combinación de gradientes y \textit{region growing}
+para extraer bordes de carretera, mientras que Zai et al.\ (2017)
+emplearon supervóxeles y \textit{graph cuts} para segmentar bordillos
+en nubes de puntos densas procedentes de \textit{Mobile Laser Scanning}.
+
+La principal virtud de este enfoque es su robustez frente a ruido
+puntual: al exigir que las detecciones cumplan una restricción
+estructural global, los falsos positivos aislados son descartados. Sin
+embargo, estos métodos asumen que el entorno es estructurado y regular,
+típicamente entornos urbanos con calles rectas y bordillos paralelos.
+En escenarios \textit{off-road} o en entornos no estructurados (como
+los del \textit{dataset} GOOSE), donde los bordes son irregulares,
+discontinuos o no responden a formas paramétricas simples, estos
+métodos presentan un rendimiento limitado.
+
+Rodríguez-Cuenca et al.~\cite{ericson2005collision} proponen una
+aproximación alternativa basada en la rasterización de la nube MLS
+sobre una rejilla 2D de $5 \times 5$\,cm. Para cada celda calculan dos
+magnitudes complementarias: un mapa de \textbf{diferencia de alturas}
+(nDSM, \textit{normalized Digital Surface Model}) que aproxima la
+altura del obstáculo sobre el suelo, y un mapa de \textbf{densidad de
+puntos} que refleja la orientación de las superficies respecto al haz
+láser. Mediante umbralización combinada y procesamiento morfológico se
+extraen píxeles candidatos a bordillo; una búsqueda posterior de
+\textbf{elementos lineales} descarta agrupaciones sin forma coherente.
+La detección de bordes se realiza rotando la nube $\pm 45^{\circ}$
+sobre el eje X, de modo que las caras verticales y horizontales del
+bordillo queden inclinadas simétricamente y los bordes se identifiquen
+como \textbf{cambios de signo de pendiente} entre puntos vecinos.
+Finalmente, incorporan una etapa de estimación de bordillos ocluidos
+para reconstruir tramos parcialmente tapados por vehículos o mobiliario
+urbano.
+
+\begin{itemize}
+    \item \textbf{Ventajas:} tasas de detección superiores al 95\,\% en
+    dos \textit{datasets} urbanos diferentes; maneja explícitamente
+    bordillos rectos y curvos; detecta tanto el borde superior como el
+    inferior; recupera bordillos ocluidos por obstáculos dinámicos; no
+    requiere cálculo costoso de normales 3D al operar sobre imágenes
+    2D.
+    \item \textbf{Limitaciones:} orientado exclusivamente a
+    post-procesamiento de MLS, no a tiempo real sobre vehículo en
+    marcha; depende de umbrales ajustados empíricamente ($H_{\min}$,
+    $H_{\max}$, densidad mínima, ancho lineal\ldots) específicos por
+    \textit{dataset}; la rasterización a $5 \times 5$\,cm asume nubes
+    muy densas, inviable con la densidad típica de un LiDAR automotriz;
+    no validado en escenarios \textit{off-road} ni en condiciones no
+    estructuradas; la rotación de $\pm 45^{\circ}$ asume que el suelo
+    es aproximadamente plano, por lo que degrada en pendientes
+    acusadas.
+\end{itemize}
+
+Finalmente, los métodos más recientes combinan información de múltiples
+sensores y emplean técnicas de aprendizaje profundo para abordar los
+casos en los que el LiDAR aislado resulta insuficiente: bordillos muy
+bajos cercanos al umbral de ruido, superficies oscuras o de baja
+reflectividad, y condiciones meteorológicas adversas. El principio de
+la fusión sensorial consiste en complementar la geometría proporcionada
+por el LiDAR con la información semántica y cromática de las cámaras
+RGB: el LiDAR aporta el salto geométrico vertical, mientras que la
+cámara confirma la presencia del bordillo mediante diferencias de
+textura, color o la continuidad de marcas viales asociadas.
+
+En el ámbito del aprendizaje profundo, la publicación del
+\textit{dataset} 3D-Curb~\cite{zhao2024curbnet} ---con anotaciones
+específicas de bordillos sobre nubes de puntos--- ha permitido el
+entrenamiento de redes neuronales capaces de identificar bordillos de
+forma implícita a partir de ejemplos etiquetados. Las principales
+limitaciones de esta familia son la complejidad de implementación
+(calibración espacio-temporal entre sensores heterogéneos, gestión de
+tasas de muestreo distintas), la necesidad de \textit{hardware} de
+procesamiento gráfico (GPU) para los métodos basados en redes, y la
+dependencia de \textit{datasets} etiquetados específicos que cubran el
+dominio de despliegue. Esta dependencia de datos supervisados es
+especialmente crítica para bordillos, ya que el etiquetado de puntos
+individuales en nubes LiDAR es laborioso y los \textit{datasets}
+disponibles (3D-Curb sobre SemanticKITTI) cubren principalmente
+entornos urbanos estructurados, lo que compromete la generalización a
+escenarios no vistos.
+
+\subsection{Identificación de obstáculos mediante agrupamiento}
+\label{sec:clustering}
+
+Una vez segmentada la superficie, los puntos restantes en la nube se
+consideran candidatos a obstáculos. Sin embargo, para que futuros
+sistemas de planificación de trayectorias puedan ejecutar maniobras
+evasivas o de seguimiento, es necesaria una etapa de agrupamiento
+(\textit{clustering}) que consolide los puntos no-suelo en clústeres
+coherentes, cada uno correspondiente a un obstáculo físico distinto.
+
+Aunque existen métodos clásicos como el \textbf{Euclidean Clustering}
+(basado en distancias euclídeas simples y crecimiento regional) o el
+\textbf{K-Means} (que exige prefijar el número de clústeres), la
+naturaleza ruidosa y dispersa de los datos LiDAR en entornos reales
+favorece el uso de \textbf{enfoques basados en densidad}, capaces de
+identificar obstáculos de forma, tamaño y número variables sin
+conocimiento previo del entorno.
+
+\subsubsection{Density-Based Spatial Clustering of Applications with Noise (DBSCAN)}
+\label{sec:dbscan}
+
+DBSCAN~\cite{yabroudi2022dbscan} es uno de los pilares de la percepción
+en robótica gracias a su capacidad de identificar clústeres de
+\textbf{forma arbitraria}, sin asumir compacidad ni convexidad; su
+\textbf{robustez intrínseca al ruido}, que descarta automáticamente los
+retornos espurios; y por no requerir fijar \textbf{el número de
+clústeres a priori}, lo cual es fundamental en entornos dinámicos donde
+la cantidad de obstáculos es desconocida y cambia entre
+\textit{frames}.
+
+El funcionamiento del algoritmo se rige por la definición de una
+\enquote{vecindad densa} mediante dos parámetros fundamentales:
+
+\begin{itemize}
+    \item $\epsilon$ (\textit{Epsilon}): representa el radio de
+    búsqueda o distancia máxima para considerar que dos puntos son
+    vecinos.
+    \item $\mathit{minPts}$ (\textit{Minimum Points}): define el número
+    mínimo de puntos que deben encontrarse dentro del radio $\epsilon$
+    para constituir una región densa o núcleo.
+\end{itemize}
+
+Bajo estos criterios, el algoritmo clasifica cada punto de la nube en
+tres categorías:
+
+\begin{itemize}
+    \item \textbf{Puntos Núcleo} (\textit{Core Points}): aquellos que
+    contienen al menos $\mathit{minPts}$ en su vecindad $\epsilon$. Son
+    el centro de los objetos detectados.
+    \item \textbf{Puntos Frontera} (\textit{Border Points}): se
+    encuentran dentro del radio $\epsilon$ de un punto núcleo, pero no
+    poseen la densidad suficiente para generar un nuevo núcleo por sí
+    mismos.
+    \item \textbf{Ruido} (\textit{Noise Points}): puntos aislados que
+    no cumplen ninguno de los criterios anteriores y son descartados
+    automáticamente.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/dbscan-types.png}
+    \caption{Tipos de puntos en DBSCAN~\cite{yabroudi2022dbscan}.}
+    \label{fig:dbscan}
+\end{figure}
+
+La aplicación de DBSCAN a la detección de obstáculos en el contexto del
+OEDR aporta ventajas estratégicas destacables. En primer lugar, su
+capacidad de filtrar ruido de los retornos espurios del LiDAR
+(provocados por partículas en suspensión, lluvia o reflejos) evita
+falsas detecciones que podrían comprometer la seguridad del vehículo.
+En segundo lugar, el enfoque basado en densidad permite agrupar
+coherentemente estructuras con discontinuidades o formas alargadas,
+como camiones articulados, vallas longitudinales o hileras de vehículos
+estacionados, evitando la fragmentación que suelen presentar los
+métodos de agrupamiento euclídeo tradicionales cuando la nube contiene
+huecos por oclusión o baja reflectividad local.
+
+Sin embargo, su aplicación directa sobre la nube de puntos enfrenta el
+desafío de la \textbf{densidad variable con la distancia}. Debido a la
+resolución angular del sensor, la densidad de puntos decrece de forma
+cuadrática respecto a la distancia. Un valor de $\epsilon$ constante
+resulta problemático: si es demasiado reducido, los objetos lejanos son
+descartados como ruido; si es excesivamente amplio, objetos cercanos
+(como dos peatones próximos) corren el riesgo de ser fusionados en un
+único clúster. Esta limitación motiva el uso de variantes adaptativas o
+enfoques de \enquote{multiepsilon} en sistemas de percepción avanzados.
+En \textit{pipelines} de percepción modernos también es habitual
+voxelizar previamente la nube para homogeneizar la densidad antes de
+aplicar DBSCAN, reduciendo tanto el coste computacional como la
+sensibilidad de los parámetros al rango.
+
+\subsection{Representación de obstáculos: cajas delimitadoras orientadas (OBBs)}
+\label{sec:obbs}
+
+Tras identificar entidades discretas en la nube de puntos mediante
+algoritmos de agrupamiento, es necesario abstraerlas en representaciones
+geométricas compactas que puedan ser procesadas eficientemente por los
+módulos posteriores. Trabajar con miles de puntos por obstáculo resulta
+inviable para la planificación de trayectorias y la evitación de
+colisiones, que requieren descripciones de baja dimensionalidad para
+mantener latencias compatibles con niveles de automatización SAE 3 o
+superiores.
+
+La literatura de geometría computacional ofrece diversos volúmenes
+delimitadores (esferas, AABB, OBB, $k$-DOP, \textit{convex hull}),
+ordenables según su compromiso entre ajuste geométrico y coste
+computacional~\cite{ericson2005collision}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/bounding-volumes.png}
+    \caption{Tipos de volúmenes envolventes~\cite{ericson2005collision}.}
+    \label{fig:bounding-volumes}
+\end{figure}
+
+En conducción autónoma, las cajas delimitadoras se han consolidado como
+representación dominante por su balance entre ajuste, coste y
+compatibilidad con los módulos posteriores.
+
+\subsubsection{AABB vs.\ OBB}
+\label{sec:aabb-obb}
+
+Existen dos enfoques principales para la construcción de cajas
+delimitadoras. El primero, la \textbf{Axis-Aligned Bounding Box (AABB)},
+es el más sencillo desde el punto de vista computacional: se obtiene a
+partir de los valores mínimos y máximos de las coordenadas $(X, Y, Z)$
+del clúster en el sistema de referencia del vehículo. Su coste es
+prácticamente despreciable, lo que la hace especialmente atractiva en
+sistemas en tiempo real. No obstante, cuando el obstáculo está
+orientado de forma oblicua respecto al eje longitudinal del vehículo,
+la AABB introduce un volumen significativo de espacio vacío en sus
+esquinas. Esta sobreestimación degrada la precisión geométrica y puede
+afectar negativamente a la eficiencia del
+planificador~\cite{ericson2005collision}.
+
+Para superar esta limitación, se emplea la \textbf{Oriented Bounding
+Box (OBB)}, que incorpora un grado de libertad adicional: la
+orientación o ángulo de guiñada $\theta$. De este modo, las aristas de
+la caja se alinean con la dirección principal del clúster en lugar de
+con los ejes del vehículo. El resultado es un ajuste mucho más preciso
+y proporciona una representación más fiel tanto del tamaño como de la
+orientación del obstáculo.
+
+Desde un punto de vista formal, una OBB puede representarse mediante el
+vector de parámetros:
+\begin{equation}
+    \mathbf{obb} = (c_x, c_y, c_z, l, w, h, \theta),
+\end{equation}
+donde $(c_x, c_y, c_z)$ define el centro del volumen, $(l, w, h)$
+corresponden a sus dimensiones (largo, ancho y alto), y $\theta$ es el
+ángulo de guiñada respecto al eje $X$ del vehículo. Esta parametrización
+compacta permite a los módulos de planificación calcular distancias de
+seguridad con precisión, realizar comprobaciones de colisión mediante
+tests geométricos eficientes y estimar dinámicas del obstáculo a partir
+de su evolución temporal entre \textit{frames} consecutivos.
+
+\subsubsection{Cálculo de la OBB mediante PCA}
+\label{sec:obb-pca}
+
+El método más extendido para calcular una OBB a partir de un clúster de
+puntos LiDAR consiste en aplicar Análisis de Componentes Principales
+(PCA) sobre las coordenadas horizontales $(X, Y)$. Este enfoque se
+apoya en una hipótesis razonable en entornos de conducción: los
+obstáculos presentan una estructura aproximadamente vertical respecto
+al suelo, por lo que su orientación puede capturarse adecuadamente en
+el plano 2D. Implementado de forma generalizada en librerías como
+PCL~\cite{rusu2011pcl}, este método destaca por su bajo coste
+computacional y por ofrecer resultados satisfactorios para la mayoría
+de objetos convexos en entornos urbanos.
+
+Sin embargo, presenta una limitación importante: su sensibilidad a
+\textit{outliers}, ya que puntos aislados alejados del centroide pueden
+sesgar significativamente la orientación estimada. Por ello, en
+aplicaciones industriales suele combinarse con etapas previas de
+filtrado (como mediana o recorte por percentiles) o sustituirse por
+métodos más robustos, como el algoritmo de \textit{rotating
+calipers}~\cite{toussaint_calipers} aplicado sobre el \textit{convex
+hull} 2D del clúster, que garantiza la obtención de la caja de área
+mínima a costa de un ligero incremento en el coste computacional.
+
+Tras el análisis de las estrategias algorítmicas para la segmentación y
+representación de obstáculos, resulta necesario establecer un marco de
+evaluación que permita medir su desempeño de forma objetiva. Por ello,
+en el siguiente apartado se describen los \textit{benchmarks} y
+conjuntos de datos (\textit{datasets}) estándar en la industria que se
+emplean para la validación experimental de los métodos propuestos en el
+presente trabajo.
+
+\section{Datasets y benchmarks}
+\label{sec:datasets}
+
+La validación objetiva de algoritmos de percepción para conducción
+autónoma requiere el uso de entornos de evaluación estandarizados que
+proporcionen \textit{ground truth} preciso y permitan comparar de forma
+cuantitativa el rendimiento de distintos métodos en condiciones
+reproducibles.
+
+Las métricas más utilizadas en estos \textit{benchmarks} incluyen la
+precisión media (\textit{mean Average Precision}, mAP) para tareas de
+detección de objetos, la Intersección sobre Unión (\textit{Intersection
+over Union}, IoU) para segmentación semántica y evaluación de cajas
+delimitadoras, el \textbf{F1-\textit{score}} como medida armónica entre
+precisión y \textit{recall}, y la \textbf{latencia por frame} como
+indicador de viabilidad en tiempo real.
+
+A continuación, se describen los \textit{benchmarks} más relevantes
+para tareas de segmentación y detección de obstáculos basadas en LiDAR.
+
+\subsection{SemanticKITTI}
+\label{sec:semantickitti}
+
+SemanticKITTI~\cite{behley2019semantickitti} es un \textit{dataset} de
+gran escala construido sobre las secuencias de odometría del
+\textit{dataset} original KITTI~\cite{geiger2012kitti}, al que añade
+anotaciones semánticas densas punto a punto para cada nube LiDAR. Las
+nubes fueron capturadas con un Velodyne HDL-64E (64 canales, 10~Hz)
+montado sobre un vehículo Volkswagen Passat circulando por la ciudad de
+Karlsruhe (Alemania), en condiciones urbanas convencionales y diurnas.
+
+El \textit{dataset} contiene 22 secuencias numeradas del 00 al 21, con
+un total de 43.552 \textit{frames} anotados según 28 clases semánticas
+que comprenden desde elementos estructurales (calzada, acera,
+edificios, vegetación) hasta objetos dinámicos (coches, peatones,
+ciclistas, camiones) y elementos auxiliares (postes, señales de
+tráfico, vallas). La convención estándar establecida por los autores
+reserva las secuencias 00--07 y 09--10 para entrenamiento, la secuencia
+08 para validación y las secuencias 11--21 para evaluación oficial en
+el \textit{benchmark online}, cuyas etiquetas de \textit{ground truth}
+no son públicas para evitar \textit{overfitting} al conjunto de prueba.
+
+SemanticKITTI se ha consolidado como el estándar para la evaluación de
+métodos de segmentación semántica 3D sobre LiDAR en entornos urbanos, y
+es uno de los \textit{benchmarks} más citados en la literatura reciente
+de percepción para vehículos autónomos.
+
+\subsection{3D-Curb}
+\label{sec:3dcurb}
+
+3D-Curb~\cite{zhao2024curbnet} es un conjunto de anotaciones
+especializado en la detección de bordillos construido como extensión de
+SemanticKITTI. Partiendo de las mismas secuencias LiDAR del
+\textit{dataset} original, añade una clase específica: \textit{curb}.
+
+La aportación fundamental de 3D-Curb es proporcionar un
+\textit{benchmark point-wise} para una tarea que SemanticKITTI no
+aborda explícitamente: la discriminación geométrica entre calzada,
+acera y el propio bordillo que los separa. Dado que los bordillos son
+estructuras de baja altura y quedan habitualmente absorbidos dentro de
+la clase \textit{road} o \textit{sidewalk} en otras anotaciones,
+3D-Curb permite evaluar cuantitativamente tanto métodos geométricos
+clásicos como arquitecturas de aprendizaje profundo específicamente
+diseñadas para detección de bordillos. Las métricas habituales
+reportadas sobre este \textit{dataset} son la precisión, el
+\textit{recall} y el F1-\textit{score} específicos de la clase
+\textit{curb}, calculados únicamente sobre los puntos anotados como
+bordillo.
+
+\subsection{KITTI-360}
+\label{sec:kitti360}
+
+KITTI-360~\cite{liao2023kitti360} representa la evolución del
+\textit{dataset} KITTI clásico, ampliando significativamente la
+cobertura geográfica y la riqueza de las anotaciones. Ofrece una visión
+de 360 grados del entorno mediante la integración de cámaras
+omnidireccionales y LiDAR de alta resolución.
+
+La contribución distintiva de KITTI-360 reside en su esquema de
+anotación denso y temporalmente consistente: además de etiquetas
+semánticas 2D y 3D, el \textit{dataset} proporciona \textit{bounding
+boxes} 3D anotadas manualmente (no derivadas de segmentación panóptica
+como en otros \textit{datasets}) para objetos estáticos y dinámicos a
+lo largo de secuencias temporales largas, junto con máscaras de
+instancia que mantienen la consistencia del identificador de objeto
+entre \textit{frames} consecutivos. Esta característica lo convierte en
+uno de los pocos \textit{benchmarks} públicos que permite evaluar
+rigurosamente la calidad geométrica de las OBBs predichas por un
+sistema de percepción, sin depender de anotaciones automáticas
+derivadas de segmentación semántica.
+
+\subsection{German Outdoor and Offroad Dataset (GOOSE)}
+\label{sec:goose}
+
+GOOSE~\cite{mortimer2024goose} surge como respuesta a la falta de
+\textit{benchmarks} específicos para entornos \textit{off-road} y no
+estructurados, un dominio todavía poco representado en la literatura de
+percepción basada en LiDAR, tradicionalmente centrada en escenarios
+urbanos. El conjunto de datos fue adquirido utilizando una plataforma
+de investigación militar, el vehículo MuCAR-3 (un Volkswagen Touareg
+modificado por la Universidad de las Fuerzas Armadas de Múnich),
+equipada con múltiples sensores: un Velodyne Alpha Prime (VLS-128, 128
+canales, 10~Hz, FOV vertical de 40\textdegree) montado sobre el techo,
+dos LiDAR Ouster OS0 laterales inclinados $\pm 45^{\circ}$ para
+detección próxima al chasis, cámaras RGB+NIR, cámara térmica infrarroja
+y sistema de posicionamiento inercial.
+
+El \textit{dataset} proporciona 10.000 \textit{frames} LiDAR y 10.000
+\textit{frames} de imagen anotados con 64 clases semánticas
+específicamente diseñadas para entornos \textit{off-road}, agrupadas en
+categorías como vegetación alta y baja, distintos tipos de terreno
+(asfalto, grava, tierra, nieve, hierba), estructuras artificiales,
+vehículos militares y civiles, y elementos de señalización rural. La
+diversidad de escenarios cubre ocho entornos distintos (bosques densos,
+caminos agrícolas, zonas suburbanas, terrenos con vegetación variable)
+recogidos a lo largo de las cuatro estaciones del año y bajo
+condiciones meteorológicas cambiantes.
